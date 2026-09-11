@@ -248,24 +248,28 @@ public class KubeVaultKubernetesAuthTestKmsFacade extends KubeVaultTestKmsFacade
                 if (status >= 200 && status < 300) {
                     LOGGER.debug("Vault request '{}' succeeded with status {}", description, status);
                     return;
-                } else {
+                }
+                else {
                     throw new IllegalStateException(
                             "Vault request '%s' failed with status %d: %s".formatted(description, status,
                                     response.body()));
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 remaining--;
                 lastException = new UncheckedIOException("IO error during Vault request: " + description, e);
                 LOGGER.warn("Vault request '{}' failed (remaining {}/{} attempts)", description, remaining,
                         MAX_ATTEMPTS, e);
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 throw new IllegalStateException("Interrupted during Vault request: " + description, e);
             }
             if (remaining > 0) {
                 try {
                     Thread.sleep(RETRY_DELAY_MS);
-                } catch (InterruptedException ie) {
+                }
+                catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                     throw new IllegalStateException("Interrupted whilst retrying Vault request: " + description, ie);
                 }
@@ -284,7 +288,8 @@ public class KubeVaultKubernetesAuthTestKmsFacade extends KubeVaultTestKmsFacade
     private String encodeJson(Object value) {
         try {
             return OBJECT_MAPPER.writeValueAsString(value);
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             throw new UncheckedIOException("Failed to serialise request body", e);
         }
     }

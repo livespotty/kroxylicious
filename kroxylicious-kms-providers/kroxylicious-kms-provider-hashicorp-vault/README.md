@@ -32,7 +32,7 @@ filterDefinitions:
           passwordFile: /opt/vault/token
       selector: TemplateKekSelector
       selectorConfig:
-        template: "KEK_$(topicName)"
+        template: "KEK-$(topicName)"
 ```
 
 ### Kubernetes Service Account (`role`)
@@ -56,7 +56,7 @@ filterDefinitions:
         # authPath: "kubernetes"
       selector: TemplateKekSelector
       selectorConfig:
-        template: "KEK_$(topicName)"
+        template: "KEK-$(topicName)"
 ```
 
 *Note: The `vaultToken` and `role` configuration properties are mutually exclusive.*
